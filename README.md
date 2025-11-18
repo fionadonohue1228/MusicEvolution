@@ -1,0 +1,2 @@
+# MusicEvolution
+How has music evolved across different genres and time periods, and what patterns emerge when we examine these changes holistically?
