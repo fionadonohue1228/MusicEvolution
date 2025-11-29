@@ -2,35 +2,138 @@
 <html>
 <style>
 body {
-  background-color: pink;   
-  color: white;           
-  font-family: cursive; 
-  font-size: 24px;            
+  background-color: black;   
+  color: whitesmoke;           
+  font-family: Arial, sans-serif; 
+  font-size: 18px;            
 }
-h1 {
-  font-size: 40px;
-  color: white;      
-  text-align: center;
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding 50px 40px;
 }
-</style>
-  <h1>
- How has music evolved across different genres and time periods, and what patterns emerge when we examine these changes holistically?
-  </h1> 
-  <p>
-  Our topic examines how the music industry has changed over time. We are using the  Spotify Track Attributes and Popularity data, 
-  and with this data, we will compare what made a song popular during each time period. This is interesting because when listening to music, 
-  people don’t necessarily think about why they like or dislike a song. This topic enables us to examine specific attributes and understand why a song is
-  successful. We will be able to model this and predict not only how a song can become successful in today’s world, but also how songs have succeeded in the past.  
-  By examining these patterns holistically, we can better understand how music has evolved and what distinguishes today’s music from that of previous decades.
-</p>
   
-  <p>
-  We decided to use the Spotify Tracks Attributes and Popularity dataset from Kaggle. 
-  This dataset originates from Spotify's APi with 21 columns and over 100 thousand rows. We chose this dataset because 
-  not only does it originate directly from Spotify, but it also has columns such as artist name, track name, and album name. 
-  With these columns, we can see what albums made an artist popular, and correlate specific popular albums with other attributes,
-  such as danceability, duration, and energy. With this data, we can identify patterns across genres, compare how different attributes 
-  contribute to popularity, and examine how music has evolved over time.
+h1 {
+  font-size: 48px;
+  color: limegreen;      
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 25px;
+  color: silver;
+  margin-bottom: 60px;
+  font-style: italic;
+}
+
+h2 {
+  font-size: 32px;
+  color: limegreen; 
+  margin-top: 60px;
+  margin-bottom: 25px;
+  border-bottom: 2px solid limegreen;
+  padding-bottom: 12px;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 24px;
+  color: whitesmoke; 
+  margin-top: 40px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+p {
+  line-height: 1.8;
+  margin-bottom: 20px;
+  color: whitesmoke; 
+  font-size: 17px;
+  text-align: justify;
+}
+
+.viz-container {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 35px 0;
+  box-shadow: 0 4px 12px black;
+  
+}
+
+.viz-container iframe {
+  display: block;
+  width: 100%;
+}
+
+.takeaway {
+  background-color: dimgray;
+  padding: 30px 35px;
+  border-left: 4px solid limegreen;
+  margin: 30px 0;
+  border-radius: 6px;
+}
+
+.takeaway h3 {
+  color: limegreen;
+  margin-top: 0;
+  font-size: 22px;
+}
+
+.takeaway p {
+  color: white;
+}
+
+.references {
+  background-color: dimgray;
+  padding: 30px 35px;
+  border-radius: 6px;
+  margin-top: 60px;
+}
+
+.references p {
+  margin: 15px 0;
+  text-align: left;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+</style>
+<body>
+
+<div class="container">
+
+<h1>Echoes Through Time<h1>
+<p class="subtitle">How Music Has Evolved Across Genres and Decades</p>
+
+<h2>Research Question</h2>
+<p>
+How has music evolved across different genres and time periods, and what patterns emerge when we examine these changes holistically?
+</p>
+
+<h2>Introduction</h2>
+<p>
+Our topic examines how the music industry has changed over time. We are using the  Spotify Track Attributes and Popularity data, 
+and with this data, we will compare what made a song popular during each time period. This is interesting because when listening to music, 
+people don’t necessarily think about why they like or dislike a song. This topic enables us to examine specific attributes and understand why a song is
+successful. We will be able to model this and predict not only how a song can become successful in today’s world, but also how songs have succeeded in the past.  
+By examining these patterns holistically, we can better understand how music has evolved and what distinguishes today’s music from that of previous decades.
+</p>
+
+<h2>Dataset</h2>
+<p>
+We decided to use the Spotify Tracks Attributes and Popularity dataset from Kaggle. 
+This dataset originates from Spotify's APi with 21 columns and over 100 thousand rows. We chose this dataset because 
+not only does it originate directly from Spotify, but it also has columns such as artist name, track name, and album name. 
+With these columns, we can see what albums made an artist popular, and correlate specific popular albums with other attributes,
+such as danceability, duration, and energy. With this data, we can identify patterns across genres, compare how different attributes 
+contribute to popularity, and examine how music has evolved over time.
 </p>
 
 <h2>Visualizations</h2>
@@ -73,8 +176,13 @@ h1 {
 </div>
   
 <h2>References</h2>
-  
-  <p>
-  1) https://royalsocietypublishing.org/doi/epdf/10.1098/rsos.171274 <br>
-  2) https://pmc.ncbi.nlm.nih.gov/articles/PMC4453253/ 
+<p>
+1) <a href="https://royalsocietypublishing.org/doi/epdf/10.1098/rsos.171274" target="_blank">https://royalsocietypublishing.org/doi/epdf/10.1098/rsos.171274</a>
 </p>
+<p>
+2) <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4453253/" target="_blank">https://pmc.ncbi.nlm.nih.gov/articles/PMC4453253/</a>
+</p>
+
+</div>
+</body>
+</html>
