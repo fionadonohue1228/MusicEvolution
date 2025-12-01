@@ -1,5 +1,5 @@
-let width = 600,
-    height = 400;
+let width = 1000,
+    height = 600;
 
 let margin = {
   top: 50,
@@ -10,36 +10,35 @@ let margin = {
 
 let svg = d3.select("#chart-container")
             .append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .style("background", "lightyellow");
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
 d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
     data.forEach(d => {
         d.year = +d.year;
-        d.duration = +d.duration / 1000;  
+        d.duration = +d.duration_ms / 1000;
     });
 
-    // Filter valid values
     data = data.filter(d => d.year >= 1950 && d.year <= 2025);
     data = data.filter(d => d.duration > 30 && d.duration < 600);
 
     let yScale = d3.scaleLinear()
                    .domain(d3.extent(data, d => d.year))
-                   .range([height - margin.bottom, margin.top]);
+                   .range([height, 0]);
 
     let xScale = d3.scaleLinear()
                    .domain([0, d3.max(data, d => d.duration)])
-                   .range([margin.left, width - margin.right]);
+                   .range([0, width]);
 
-    let xAxis = svg.append("g")
+=    svg.append("g")
         .call(d3.axisBottom(xScale))
-        .attr("transform", `translate(0, ${height - margin.bottom})`);
+        .attr("transform", `translate(0, ${height})`);
 
-    let yAxis = svg.append("g")
-        .call(d3.axisLeft(yScale).tickFormat(d3.format("d")))
-        .attr("transform", `translate(${margin.left}, 0)`);
+    svg.append("g")
+        .call(d3.axisLeft(yScale).tickFormat(d3.format("d")));
 
     svg.selectAll("circle")
         .data(data)
@@ -53,14 +52,14 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
     svg.append("text")
         .attr("x", width / 2)
-        .attr("y", height - 10)
+        .attr("y", height + 40)
         .style("text-anchor", "middle")
         .style("font-size", "16px")
         .text("Duration (seconds)");
 
     svg.append("text")
         .attr("x", -height / 2)
-        .attr("y", 25)
+        .attr("y", -50)
         .attr("transform", "rotate(-90)")
         .style("text-anchor", "middle")
         .style("font-size", "16px")
