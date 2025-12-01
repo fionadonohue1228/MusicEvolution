@@ -18,9 +18,9 @@ let svg = d3.select("#chart-container")
 d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
     data.forEach(d => {
-        d.year = +d.year;
-        d.duration = +d.duration_ms / 1000;
-    });
+    d.year = +d.year;  
+    d.duration = +d.duration_ms / 1000; 
+});
 
     data = data.filter(d => d.year >= 1950 && d.year <= 2025);
     data = data.filter(d => d.duration > 30 && d.duration < 600);
