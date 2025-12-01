@@ -1,57 +1,72 @@
-const margin = { top: 70, right: 30, bottom: 40, left: 80 };
-const width = 1200 - margin.left - margin.right;
-const height = 500 - margin.top - margin.bottom;
+let 
+  width = 600,
+  height = 400;
 
-const x = d3.scaleLinear().range([0, width]);
-const y = d3.scaleLinear().range([height, 0]);
+let margin = {
+  top:50,
+  bottom:50,
+  left:50,
+  right:50
+}
 
-const svg = d3.select("#chart-container")
-  .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+let svg = d3.select("#chart-container")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
 d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
-  data = data.filter(d => +d.year >= 1950 && +d.year <= 2025);
+    data.forEach(d => {
+        d.year = +d.year;
+        d.duration = +d.duration_ms / 1000;
+    });
 
-  data.sort((a, b) => +a.year - +b.year);
+    data = data.filter(d => d.year >= 1950 && d.year <= 2025);
 
-  x.domain(d3.extent(data, d => +d.year));
-  y.domain([0, d3.max(data, d => +d.duration_ms)]);
+    data = data.filter(d => d.duration > 30 && d.duration < 600);
 
-  svg.append("g")
-    .attr("transform", `translate(0, ${height})`)
-    .call(d3.axisBottom(x).tickFormat(d3.format("d")));
+let yScale = d3.scaleLinear()
+              .domain([0,10])
+              .range([height - margin.bottom, margin.top])
 
-  svg.append("g")
-    .call(d3.axisLeft(y));
+let xScale = d3.scaleBand()
+              .domain(data.map(d => d.name))
+              .range([margin.left, width - margin.right])
 
-  svg.append("text")
-    .attr("x", width / 2)
-    .attr("y", height + 35)
-    .attr("text-anchor", "middle")
-    .style("font-size", "16px")
-    .text("Year");
+let xAxis = svg.append('g')
+              .call(d3.axisBottom().scale(xScale))
+              .attr('transform', `translate(0, ${height - margin.bottom})`)
 
-  svg.append("text")
-    .attr("text-anchor", "middle")
-    .attr("transform", "rotate(-90)")
-    .attr("x", -height / 2)
-    .attr("y", -50)
-    .style("font-size", "16px")
-    .text("Duration (ms)");
+let yAxis = svg.append('g')
+              .call(d3.axisLeft().scale(yScale))
+              .attr('transform', `translate(${margin.left}, 0)`)
 
- const line = d3.line()
-  .x(d => x(d.year))
-  .y(d => y(d.duration));
+    svg.append('text')
+        .attr('x', width / 2)
+        .attr('y', height + 35)
+        .text('Year')
+        .style('text-anchor', 'middle')
+        .style('font-size', '16px');
 
-svg.append("path")
-  .datum(data)
-  .attr("fill", "none")
-  .attr("stroke", "steelblue")
-  .attr("stroke-width", 2)
-  .attr("d", line);
+    svg.append('text')
+        .attr('x', -height / 2)
+        .attr('y', -50)
+        .attr('transform', 'rotate(-90)')
+        .text('Duration (seconds)')
+        .style('text-anchor', 'middle')
+        .style('font-size', '16px');
 
+    let line = d3.line()
+                 .x(d => xScale(d.year))
+                 .y(d => yScale(d.duration))
+                 .curve(d3.curveLinear);
+
+    svg.append("path")
+       .datum(data)
+       .attr("d", line)
+       .attr("stroke", "black")
+       .attr("stroke-width", 2)
+       .attr("fill", "none");
 });
