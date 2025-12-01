@@ -7,18 +7,22 @@ let margin = {
   left: 80,
   right: 50
 };
+
 let svg = d3.select("#chart-container")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
-            
+
 d3.csv("15000_tracks_cleaned.csv").then(function(data) {
+
     data.forEach(d => {
-        d.year = +d.year;  
-        d.duration = +d.duration_ms / 1000; 
+        d.year = +d.year;
+        d.duration = +d.duration_ms / 1000;
     });
+
+    data = data.filter(d => !isNaN(d.year) && d.year > 0);
 
     data = data.filter(d => d.year >= 1960 && d.year <= 2020);
 
@@ -31,8 +35,8 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
                    .range([0, width]);
 
     svg.append("g")
-        .call(d3.axisBottom(xScale))
-        .attr("transform", `translate(0, ${height})`);
+        .attr("transform", `translate(0, ${height})`)
+        .call(d3.axisBottom(xScale));
 
     svg.append("g")
         .call(d3.axisLeft(yScale).tickFormat(d3.format("d")));
@@ -44,7 +48,8 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
         .attr("r", 5)
         .attr("cx", d => xScale(d.duration))
         .attr("cy", d => yScale(d.year))
-        .attr("fill", "red");
+        .attr("fill", "red")
+        .attr("opacity", 1);
 
     svg.append("text")
         .attr("x", width / 2)
