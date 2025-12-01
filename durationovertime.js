@@ -28,19 +28,19 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
     data = data.filter(d => d.duration > 30 && d.duration < 600);
 
 let yScale = d3.scaleLinear()
-              .domain([0, d3.max(data, d => d.duration)])
-              .range([height, 0]);
+    .domain([0, d3.max(data, d => d.duration)])  
+    .range([height, 0]);                         
 
-let xScale = d3.scaleLinear()                              
-              .domain(d3.extent(data, d => d.year))        
-              .range([margin.left, width - margin.right]);
+let xScale = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.year))
+    .range([0, width]);
 
 let xAxis = svg.append('g')
-              .call(d3.axisBottom().scale(xScale).tickFormat(d3.format("d")))
-              .attr('transform', `translate(0, ${height - margin.bottom})`);
+    .call(d3.axisBottom(xScale).tickFormat(d3.format("d")))
+    .attr('transform', `translate(0, ${height})`);
 
 let yAxis = svg.append('g')
-              .call(d3.axisLeft(yScale));
+    .call(d3.axisLeft(yScale));
 
     svg.append('text')
         .attr('x', width / 2)
