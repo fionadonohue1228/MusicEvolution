@@ -43,14 +43,15 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
     .style("font-size", "16px")
     .text("Duration (ms)");
 
-  svg.selectAll("circle")
-  .data(data)
-  .enter()
-  .append("circle")
-    .attr("cx", d => x(d.year))
-    .attr("cy", d => y(d.duration))
-    .attr("r", 2)
-    .attr("fill", "steelblue")
-    .attr("opacity", 0.5);
+ const line = d3.line()
+  .x(d => x(d.year))
+  .y(d => y(d.duration));
+
+svg.append("path")
+  .datum(data)
+  .attr("fill", "none")
+  .attr("stroke", "steelblue")
+  .attr("stroke-width", 2)
+  .attr("d", line);
 
 });
