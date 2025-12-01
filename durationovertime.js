@@ -1,5 +1,6 @@
 let width = 1000,
     height = 600;
+
 let margin = {
   top: 50,
   bottom: 50,
@@ -18,20 +19,24 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
         d.year = +d.year;  
         d.duration = +d.duration_ms / 1000; 
     });
-    
+
+    data = data.filter(d => d.year >= 1960 && d.year <= 2020);
+
     let yScale = d3.scaleLinear()
                    .domain(d3.extent(data, d => d.year))
                    .range([height, 0]);
+
     let xScale = d3.scaleLinear()
                    .domain([0, d3.max(data, d => d.duration)])
                    .range([0, width]);
-                   
+
     svg.append("g")
         .call(d3.axisBottom(xScale))
         .attr("transform", `translate(0, ${height})`);
+
     svg.append("g")
         .call(d3.axisLeft(yScale).tickFormat(d3.format("d")));
-        
+
     svg.selectAll("circle")
         .data(data)
         .enter()
@@ -39,15 +44,15 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
         .attr("r", 5)
         .attr("cx", d => xScale(d.duration))
         .attr("cy", d => yScale(d.year))
-        .attr("fill", "red")
-        .attr("opacity", 1);
-        
+        .attr("fill", "red");
+
     svg.append("text")
         .attr("x", width / 2)
         .attr("y", height + 40)
         .style("text-anchor", "middle")
         .style("font-size", "16px")
         .text("Duration (seconds)");
+
     svg.append("text")
         .attr("x", -height / 2)
         .attr("y", -50)
