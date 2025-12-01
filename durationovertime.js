@@ -8,12 +8,11 @@ let margin = {
   right: 50
 };
 
-let svg = d3.select("#chart-container")
+let svg = d3.select("body")
     .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "lightyellow");
 
 d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
@@ -24,23 +23,25 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
     data.sort((a, b) => a.year - b.year);
 
-    let yScale = d3.scaleLinear()
+   let yScale = d3.scaleLinear()
         .domain(d3.extent(data, d => d.year))
-        .range([height, 0]);
+        .range([height - margin.bottom, margin.top]);  
 
     let xScale = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.duration)])
-        .range([0, width]);
+        .range([margin.left, width - margin.right]); 
 
-    svg.append("g")
-        .attr("transform", `translate(0, ${height})`)
-        .call(d3.axisBottom(xScale));
+    
+   let xAxis = svg.append("g")
+    .attr("transform", `translate(0, ${height - margin.bottom})`)
+    .call(d3.axisBottom(xScale));
 
-    svg.append("g")
-        .call(d3.axisLeft(yScale).tickFormat(d3.format("d")));
+    let yAxis = svg.append("g")
+    .attr("transform", `translate(${margin.left}, 0)`)
+    .call(d3.axisLeft(yScale));
 
 
-    svg.selectAll("circle")
+    let circle = svg.selectAll("circle")
         .data(data)
         .enter()
         .append("circle")
@@ -49,19 +50,6 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
         .attr("cy", d => yScale(d.year))
         .attr("fill", "red")
         .attr("opacity", 0.3);   
-
-
-    let line = d3.line()
-        .x(d => xScale(d.duration))
-        .y(d => yScale(d.year));
-
-    svg.append("path")
-        .datum(data)
-        .attr("fill", "none")
-        .attr("stroke", "red")
-        .attr("stroke-width", 2)
-        .attr("d", line);
-
 
     svg.append("text")
         .attr("x", width / 2)
