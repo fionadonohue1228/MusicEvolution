@@ -22,11 +22,10 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
         d.duration = +d.duration_ms / 1000;
     });
 
-    data = data.filter(d => !isNaN(d.year) && d.year > 0);
 
-    data = data.filter(d => d.year >= 1960 && d.year <= 2020);
+data.sort((a, b) => a.year - b.year);
 
-    let yScale = d3.scaleLinear()
+let yScale = d3.scaleLinear()
                    .domain(d3.extent(data, d => d.year))
                    .range([height, 0]);
 
@@ -41,15 +40,16 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
     svg.append("g")
         .call(d3.axisLeft(yScale).tickFormat(d3.format("d")));
 
-    svg.selectAll("circle")
-        .data(data)
-        .enter()
-        .append("circle")
-        .attr("r", 5)
-        .attr("cx", d => xScale(d.duration))
-        .attr("cy", d => yScale(d.year))
-        .attr("fill", "red")
-        .attr("opacity", 1);
+    let line = d3.line()
+                 .x(d => xScale(d.duration))
+                 .y(d => yScale(d.year));
+
+    svg.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "red")
+        .attr("stroke-width", 2)
+        .attr("d", line);
 
     svg.append("text")
         .attr("x", width / 2)
