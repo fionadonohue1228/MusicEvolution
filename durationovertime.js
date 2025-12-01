@@ -55,19 +55,19 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
         .attr("fill", "red")
         .attr("opacity", 0.3);   
 
-    svg.append("text")
-        .attr("x", width / 2)
-        .attr("y", height + 40)
-        .style("text-anchor", "middle")
-        .style("font-size", "16px")
-        .text("Duration (seconds)");
+   svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", height - 5)          
+    .style("text-anchor", "middle")
+    .style("font-size", "16px")
+    .text("Duration (seconds)");
 
-    svg.append("text")
-        .attr("x", -height / 2)
-        .attr("y", -50)
-        .attr("transform", "rotate(-90)")
-        .style("text-anchor", "middle")
-        .style("font-size", "16px")
-        .text("Year");
+svg.append("text")
+    .attr("x", -height / 2)
+    .attr("y", 20)                 
+    .attr("transform", "rotate(-90)")
+    .style("text-anchor", "middle")
+    .style("font-size", "16px")
+    .text("Year");
 });
 
