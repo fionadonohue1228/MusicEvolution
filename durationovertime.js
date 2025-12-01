@@ -1,13 +1,12 @@
-let 
-  width = 600,
-  height = 400;
+let width = 600,
+    height = 400;
 
 let margin = {
-  top:50,
-  bottom:50,
-  left:50,
-  right:50
-}
+  top: 50,
+  bottom: 50,
+  left: 50,
+  right: 50
+};
 
 let svg = d3.select("#chart-container")
             .append("svg")
@@ -18,54 +17,64 @@ let svg = d3.select("#chart-container")
 
 d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
+    // Convert values
     data.forEach(d => {
         d.year = +d.year;
-        d.duration = +d.duration_ms / 1000;
+        d.duration = +d.duration_ms;   // <-- KEEPING MILLISECONDS
     });
 
+    // Keep reasonable years
     data = data.filter(d => d.year >= 1950 && d.year <= 2025);
 
-    data = data.filter(d => d.duration > 30 && d.duration < 600);
+    // Remove insane outliers (30 sec to 10 min)
+    data = data.filter(d => d.duration > 30000 && d.duration < 600000);
 
-let yScale = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d.duration)])  
-    .range([height, 0]);                         
+    // Sort by year
+    data.sort((a, b) => a.year - b.year);
 
-let xScale = d3.scaleLinear()
-    .domain(d3.extent(data, d => d.year))
-    .range([0, width]);
+    // ----- SCALES -----
+    let yScale = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.duration)])   // ms
+        .range([height, 0]);
 
-let xAxis = svg.append('g')
-    .call(d3.axisBottom(xScale).tickFormat(d3.format("d")))
-    .attr('transform', `translate(0, ${height})`);
+    let xScale = d3.scaleLinear()
+        .domain(d3.extent(data, d => d.year))         // years
+        .range([0, width]);
 
-let yAxis = svg.append('g')
-    .call(d3.axisLeft(yScale));
+    // ----- AXES -----
+    let xAxis = svg.append("g")
+        .call(d3.axisBottom(xScale).tickFormat(d3.format("d")))
+        .attr("transform", `translate(0, ${height})`);
 
-    svg.append('text')
-        .attr('x', width / 2)
-        .attr('y', height + 35)
-        .text('Year')
-        .style('text-anchor', 'middle')
-        .style('font-size', '16px');
+    let yAxis = svg.append("g")
+        .call(d3.axisLeft(yScale));
 
-    svg.append('text')
-        .attr('x', -height / 2)
-        .attr('y', -50)
-        .attr('transform', 'rotate(-90)')
-        .text('Duration (seconds)')
-        .style('text-anchor', 'middle')
-        .style('font-size', '16px');
+    // ----- AXIS LABELS -----
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height + 40)
+        .style("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("Year");
 
+    svg.append("text")
+        .attr("x", -height / 2)
+        .attr("y", -40)
+        .attr("transform", "rotate(-90)")
+        .style("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("Duration (ms)");
+
+    // ----- LINE -----
     let line = d3.line()
-                 .x(d => xScale(d.year))
-                 .y(d => yScale(d.duration))
-                 .curve(d3.curveLinear);
+        .x(d => xScale(d.year))
+        .y(d => yScale(d.duration));
 
     svg.append("path")
-       .datum(data)
-       .attr("d", line)
-       .attr("stroke", "black")
-       .attr("stroke-width", 2)
-       .attr("fill", "none");
+        .datum(data)
+        .attr("d", line)
+        .attr("stroke", "black")
+        .attr("stroke-width", 2)
+        .attr("fill", "none");
+
 });
