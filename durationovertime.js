@@ -9,11 +9,11 @@ let margin = {
 };
 
 let svg = d3.select("#chart-container")
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
 
 d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
@@ -22,16 +22,15 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
         d.duration = +d.duration_ms / 1000;
     });
 
+    data.sort((a, b) => a.year - b.year);
 
-data.sort((a, b) => a.year - b.year);
-
-let yScale = d3.scaleLinear()
-                   .domain(d3.extent(data, d => d.year))
-                   .range([height, 0]);
+    let yScale = d3.scaleLinear()
+        .domain(d3.extent(data, d => d.year))
+        .range([height, 0]);
 
     let xScale = d3.scaleLinear()
-                   .domain([0, d3.max(data, d => d.duration)])
-                   .range([0, width]);
+        .domain([0, d3.max(data, d => d.duration)])
+        .range([0, width]);
 
     svg.append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -40,9 +39,21 @@ let yScale = d3.scaleLinear()
     svg.append("g")
         .call(d3.axisLeft(yScale).tickFormat(d3.format("d")));
 
+
+    svg.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("r", 3)               
+        .attr("cx", d => xScale(d.duration))
+        .attr("cy", d => yScale(d.year))
+        .attr("fill", "red")
+        .attr("opacity", 0.3);   
+
+
     let line = d3.line()
-                 .x(d => xScale(d.duration))
-                 .y(d => yScale(d.year));
+        .x(d => xScale(d.duration))
+        .y(d => yScale(d.year));
 
     svg.append("path")
         .datum(data)
@@ -50,6 +61,7 @@ let yScale = d3.scaleLinear()
         .attr("stroke", "red")
         .attr("stroke-width", 2)
         .attr("d", line);
+
 
     svg.append("text")
         .attr("x", width / 2)
@@ -66,3 +78,4 @@ let yScale = d3.scaleLinear()
         .style("font-size", "16px")
         .text("Year");
 });
+
