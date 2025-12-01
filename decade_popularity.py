@@ -17,10 +17,10 @@ decade = alt.Chart(spotify_rand).mark_bar().encode(
     width=1000,
     height=500,
     title={
-        "text": "Decade Popularity by Track",
+        "text": "Popularity Evolution: Decade Popularity by Track",
         "subtitle": "Showing 100 randomly selected tracks",
         "fontSize": 22,
         "subtitleFontSize": 13
     }
 )
-decade
+decade.save("decade_pop.html")
