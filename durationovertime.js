@@ -33,7 +33,7 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
                    .domain([0, d3.max(data, d => d.duration)])
                    .range([0, width]);
 
-=    svg.append("g")
+    svg.append("g")
         .call(d3.axisBottom(xScale))
         .attr("transform", `translate(0, ${height})`);
 
