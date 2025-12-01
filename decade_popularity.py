@@ -17,9 +17,10 @@ decade = alt.Chart(spotify_rand).mark_bar().encode(
 ).properties(
     width=1000,
     height=500,
-    title='Decade Popularity by Track'
-    subtitle='Showing the popularity levels between 100 random songs across the decades'
-
+     title=alt.TitleParams(
+        text='Decade Popularity by Track',
+        subtitle='Showing 100 randomly selected tracks'
+    )
 )
-
+decade
 decade
