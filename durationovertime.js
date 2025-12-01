@@ -8,10 +8,11 @@ let margin = {
   right: 50
 };
 
-let svg = d3.select("body")
+let svg = d3.select('body')
     .append("svg")
     .attr("width", width)
     .attr("height", height)
+    .style('background', 'lightyellow');
 
 
 d3.csv("15000_tracks_cleaned.csv").then(function(data) {
