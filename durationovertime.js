@@ -4,70 +4,66 @@ let width = 600,
 let margin = {
   top: 50,
   bottom: 50,
-  left: 50,
+  left: 80,
   right: 50
 };
 
 let svg = d3.select("#chart-container")
             .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
+            .attr("width", width)
+            .attr("height", height)
+            .style("background", "lightyellow");
 
 d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
     data.forEach(d => {
         d.year = +d.year;
-        d.duration = +d.duration_ms;   
+        d.duration = +d.duration_ms / 1000;   
     });
 
     data = data.filter(d => d.year >= 1950 && d.year <= 2025);
-
-    data = data.filter(d => d.duration > 30000 && d.duration < 600000);
-
-    data.sort((a, b) => a.year - b.year);
+    data = data.filter(d => d.duration > 30 && d.duration < 600);
 
     let yScale = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.duration)]) 
-        .range([height, 0]);
+                   .domain(d3.extent(data, d => d.year))   
+                   .range([height - margin.bottom, margin.top]);
 
     let xScale = d3.scaleLinear()
-        .domain(d3.extent(data, d => d.year))        
-        .range([0, width]);
+                   .domain([0, d3.max(data, d => d.duration)])
+                   .range([margin.left, width - margin.right]);
 
     let xAxis = svg.append("g")
-        .call(d3.axisBottom(xScale).tickFormat(d3.format("d")))
-        .attr("transform", `translate(0, ${height})`);
+        .call(d3.axisBottom(xScale))
+        .attr("transform", `translate(0, ${height - margin.bottom})`);
 
     let yAxis = svg.append("g")
-        .call(d3.axisLeft(yScale));
+        .call(d3.axisLeft(yScale).tickFormat(d3.format("d")))
+        .attr("transform", `translate(${margin.left}, 0)`);
+
+    svg.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("r", 3)
+        .attr("cx", d => xScale(d.duration))
+        .attr("cy", d => yScale(d.year))
+        .attr("fill", "black")
+        .attr("opacity", 0.4);
 
     svg.append("text")
         .attr("x", width / 2)
-        .attr("y", height + 40)
+        .attr("y", height - 10)
         .style("text-anchor", "middle")
         .style("font-size", "16px")
-        .text("Year");
+        .text("Duration (seconds)");
 
     svg.append("text")
         .attr("x", -height / 2)
-        .attr("y", -40)
+        .attr("y", 25)
+        .attr("transform", "rotate(-90)")
         .style("text-anchor", "middle")
         .style("font-size", "16px")
-        .text("Duration (ms)");
-        .attr("transform", "rotate(-90)")
-
-
-    let line = d3.line()
-        .x(d => xScale(d.year))
-        .y(d => yScale(d.duration));
-
-    svg.append("path")
-        .datum(data)
-        .attr("d", line)
-        .attr("stroke", "black")
-        .attr("stroke-width", 2)
-        .attr("fill", "none");
-
+        .text("Year");
 });
+
+
