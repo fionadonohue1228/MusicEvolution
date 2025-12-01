@@ -18,14 +18,15 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
     data.forEach(d => {
         d.year = +d.year;
-        d.duration = +d.duration_ms / 1000;   
+        d.duration = +d.duration / 1000;  
     });
 
+    // Filter valid values
     data = data.filter(d => d.year >= 1950 && d.year <= 2025);
     data = data.filter(d => d.duration > 30 && d.duration < 600);
 
     let yScale = d3.scaleLinear()
-                   .domain(d3.extent(data, d => d.year))   
+                   .domain(d3.extent(data, d => d.year))
                    .range([height - margin.bottom, margin.top]);
 
     let xScale = d3.scaleLinear()
