@@ -3,7 +3,7 @@ import pandas as pd
 
 spotify_rand = spotify.sample(n=100, random_state=42)
 
-slider = alt.binding_range(min=0.05, max=1, step=0.05, name="Popularity:")
+slider = alt.binding_range(min=0.05, max=1, step=0.05, name="Decade:")
 op_var = alt.param(value=0.5, bind=slider)
 
 decade = alt.Chart(spotify_rand).mark_bar().encode(
