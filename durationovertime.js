@@ -27,21 +27,22 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
     data = data.filter(d => d.duration > 30 && d.duration < 600);
 
-let yScale = d3.scaleLinear()
-              .domain([0,10])
-              .range([height - margin.bottom, margin.top])
+  
+  let yScale = d3.scaleLinear()
+              .domain([0, d3.max(data, d => d.duration)])  
+              .range([height - margin.bottom, margin.top]);
 
-let xScale = d3.scaleBand()
-              .domain(data.map(d => d.name))
-              .range([margin.left, width - margin.right])
+let xScale = d3.scaleLinear()                              
+              .domain(d3.extent(data, d => d.year))        
+              .range([margin.left, width - margin.right]);
 
 let xAxis = svg.append('g')
-              .call(d3.axisBottom().scale(xScale))
-              .attr('transform', `translate(0, ${height - margin.bottom})`)
+              .call(d3.axisBottom().scale(xScale).tickFormat(d3.format("d")))
+              .attr('transform', `translate(0, ${height - margin.bottom})`);
 
 let yAxis = svg.append('g')
               .call(d3.axisLeft().scale(yScale))
-              .attr('transform', `translate(${margin.left}, 0)`)
+              .attr('transform', `translate(${margin.left}, 0)`);
 
     svg.append('text')
         .attr('x', width / 2)
