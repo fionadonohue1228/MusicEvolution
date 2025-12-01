@@ -12,7 +12,7 @@ let svg = d3.select("body")
     .append("svg")
     .attr("width", width)
     .attr("height", height)
-    .style("background", "lightyellow");
+
 
 d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
@@ -23,9 +23,9 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
     data.sort((a, b) => a.year - b.year);
 
-   let yScale = d3.scaleLinear()
-        .domain(d3.extent(data, d => d.year))
-        .range([height - margin.bottom, margin.top]);  
+  let yScale = d3.scaleLinear()
+    .domain([2020, 1950])  
+    .range([margin.top, height - margin.bottom]);
 
     let xScale = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.duration)])
@@ -36,9 +36,13 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
     .attr("transform", `translate(0, ${height - margin.bottom})`)
     .call(d3.axisBottom(xScale));
 
-    let yAxis = svg.append("g")
+   let yAxis = svg.append("g")
     .attr("transform", `translate(${margin.left}, 0)`)
-    .call(d3.axisLeft(yScale));
+    .call(
+        d3.axisLeft(yScale)
+          .tickFormat(d3.format("d"))
+          .tickValues(d3.range(1950, 2025, 5))  
+    );
 
 
     let circle = svg.selectAll("circle")
