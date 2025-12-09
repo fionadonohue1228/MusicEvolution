@@ -83,13 +83,8 @@ d3.select("#decade").on("change", function() {
 
   svg.selectAll("rect")
     .attr("opacity", d =>
-    .style("fill-opacity", d => {
-        if (d.year >= start && d.year <= end) {
-            return 0.9;
-        }
-        return 0.05;
-    })    
-         );
+      d.year >= start && d.year <= end ? 0.9 : 0.05
+    );
 });
 
 
@@ -111,4 +106,3 @@ svg.append("text")
 
 
 });
-
