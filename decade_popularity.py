@@ -6,7 +6,7 @@ warnings.filterwarnings('ignore', category=FutureWarning, module='altair')
 
 spotify = pd.read_csv("15000_tracks_cleaned.csv")
 
-select_bar = alt.selection_point(fields=['track_name'], empty=True)
+select_bar = alt.selection_point(fields=['decade'], empty=True)
 
 
 top30 = (
