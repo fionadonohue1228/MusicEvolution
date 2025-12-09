@@ -16,7 +16,7 @@ top30 = (
     .head(30)
 )
 
-legend_color = ['#4FBD1C', '#FF9100', '#F701FF', '#0492FF']
+legend_color = ['#53B801', '#EBB01A', '#945388', '#1B6891']
 
 
 decade = (
