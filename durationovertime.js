@@ -1,5 +1,5 @@
-let width = 1000,
-    height = 600;
+let width = 800,
+    height = 500;
 
 let margin = {
   top: 50,
@@ -12,7 +12,10 @@ let svg = d3.select('body')
     .append("svg")
     .attr("width", width)
     .attr("height", height)
-    .style('background', 'lightyellow');
+    .append("g")
+    .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
 
 
 d3.csv("15000_tracks_cleaned.csv").then(function(data) {
@@ -24,51 +27,88 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
 
     data.sort((a, b) => a.year - b.year);
 
-  let yScale = d3.scaleLinear()
-    .domain([2020, 1950])  
-    .range([margin.top, height - margin.bottom]);
 
-    let xScale = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.duration)])
-        .range([margin.left, width - margin.right]); 
+    let year = data.map(d => d.year);
 
-    
-   let xAxis = svg.append("g")
-    .attr("transform", `translate(0, ${height - margin.bottom})`)
-    .call(d3.axisBottom(xScale));
+    let x = d3.scaleLinear()
+        .range([0, width])
+        .domain([0, 600]);
 
-   let yAxis = svg.append("g")
-    .attr("transform", `translate(${margin.left}, 0)`)
-    .call(
-        d3.axisLeft(yScale)
-          .tickFormat(d3.format("d"))
-          .tickValues(d3.range(1950, 2025, 5))  
-    );
+    svg.append("g")
+        .attr("transform", "translate(0," + (height - 80) + ")")   
+        .call(
+            d3.axisBottom(x)
+                .ticks(10)
+                .tickFormat(d => Math.round(d) + "s")
+        );
+
+  
+    let y = d3.scaleBand()
+        .range([height - 80, 0])  
+        .domain(year)
+        .padding(0.01);
+
+    svg.append("g")
+        .call(
+            d3.axisLeft(y)
+                .tickValues(year.filter(d => d % 10 === 0))  
+        );
 
 
-    let circle = svg.selectAll("circle")
-        .data(data)
-        .enter()
-        .append("circle")
-        .attr("r", 3)               
-        .attr("cx", d => xScale(d.duration))
-        .attr("cy", d => yScale(d.year))
-        .attr("fill", "red")
-        .attr("opacity", 0.3);   
+svg.selectAll("rect")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("x", d => x(d.duration))    
+    .attr("y", d => y(d.year))        
+    .attr("width", 8)                 
+    .attr("height", 8)
+    .attr("fill", "#ED9E01")
+    .attr("opacity", 0.07);  
 
-   svg.append("text")
+
+
+d3.select("#decade").on("change", function() {
+
+  let decade = this.value;
+
+  if (decade === "all") {
+    svg.selectAll("rect")
+      .attr("opacity", 0.07);  
+    return;
+  }
+
+  let start = +decade;
+  let end = start + 9;
+
+  svg.selectAll("rect")
+    .attr("opacity", d =>
+    .style("fill-opacity", d => {
+        if (d.year >= start && d.year <= end) {
+            return 0.9;
+        }
+        return 0.05;
+    })    
+         );
+});
+
+
+svg.append("text")
     .attr("x", width / 2)
-    .attr("y", height - 5)          
+    .attr("y", height - 55)   
     .style("text-anchor", "middle")
     .style("font-size", "16px")
-    .text("Duration (seconds)");
+    .text("Duration in Seconds");
+
 
 svg.append("text")
     .attr("x", -height / 2)
-    .attr("y", 20)                 
+    .attr("y", -40)   
     .attr("transform", "rotate(-90)")
     .style("text-anchor", "middle")
     .style("font-size", "16px")
-    .text("Year");
+    .text("Decade");
+
+
 });
 
