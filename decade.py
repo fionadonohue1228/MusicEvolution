@@ -4,6 +4,8 @@ import warnings
 warnings.filterwarnings('ignore', category=UserWarning, module='altair')
 warnings.filterwarnings('ignore', category=FutureWarning, module='altair')
 
+spotify = pd.read_csv("15000_tracks_cleaned.csv")
+
 select_bar = alt.selection_point(fields=['track_name'], empty=True)
 
 
