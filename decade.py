@@ -1,5 +1,8 @@
 import altair as alt
 import pandas as pd
+import warnings
+warnings.filterwarnings('ignore', category=UserWarning, module='altair')
+warnings.filterwarnings('ignore', category=FutureWarning, module='altair')
 
 select_bar = alt.selection_single(fields=['track_name'], empty='all')
 
@@ -41,4 +44,4 @@ decade = (
     )
 )
 
-decade
+decade.save('decade.html')
