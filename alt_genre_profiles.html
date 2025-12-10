@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@6.1.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-e5a259ec8433762078996669f389370e"}, "mark": {"type": "bar"}, "encoding": {"color": {"condition": {"test": {"or": [{"param": "param_20321b107c7442c2"}, {"param": "param_c9709fb28bed0d64"}]}, "field": "feature", "legend": {"direction": "horizontal", "labelFontSize": 13, "orient": "top", "symbolSize": 200, "titleFontSize": 18}, "scale": {"domain": ["Acousticness", "Danceability", "Energy", "Speechiness", "Valence"], "range": ["teal", "orange", "steelblue", "yellowgreen", "pink"]}, "title": "Feature", "type": "nominal"}, "value": "white"}, "stroke": {"condition": {"param": "param_c9709fb28bed0d64", "value": "black"}, "value": null}, "strokeWidth": {"condition": {"param": "param_c9709fb28bed0d64", "value": 2}, "value": 1}, "tooltip": [{"field": "track_genre", "title": "Genre", "type": "nominal"}, {"field": "feature", "title": "Feature", "type": "nominal"}, {"field": "value", "format": ".1f", "title": "Value", "type": "quantitative"}], "x": {"axis": {"labelAngle": -45, "labelFontSize": 14, "titleFontSize": 18}, "field": "track_genre", "title": "Genre", "type": "nominal"}, "xOffset": {"field": "feature", "type": "nominal"}, "y": {"axis": {"labelFontSize": 14, "titleFontSize": 18}, "field": "value", "scale": {"domain": [0, 100]}, "title": "Average Value per Song (0-100)", "type": "quantitative"}}, "height": 500, "params": [{"name": "param_20321b107c7442c2", "select": {"type": "point", "fields": ["feature"]}, "bind": "legend"}, {"name": "param_c9709fb28bed0d64", "select": {"type": "point", "fields": ["feature"], "nearest": false, "on": "click"}}], "title": {"text": "Comparative Genre Analysis: Audio Profiles", "subtitle": "Click legend or a bar to highlight a feature across all genres", "anchor": "start", "offset": 20, "fontSize": 22, "subtitleFontSize": 13}, "width": 900, "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json", "datasets": {"data-e5a259ec8433762078996669f389370e": [{"track_genre": "acoustic", "feature": "Energy", "value": 43.5646497461929}, {"track_genre": "afrobeat", "feature": "Energy", "value": 70.38694331983805}, {"track_genre": "ambient", "feature": "Energy", "value": 23.735249498997995}, {"track_genre": "bluegrass", "feature": "Energy", "value": 53.13541623843783}, {"track_genre": "chicago-house", "feature": "Energy", "value": 73.15010548523206}, {"track_genre": "children", "feature": "Energy", "value": 49.322381347150255}, {"track_genre": "club", "feature": "Energy", "value": 72.47277207392197}, {"track_genre": "comedy", "feature": "Energy", "value": 70.12314720812182}, {"track_genre": "acoustic", "feature": "Danceability", "value": 54.81989847715736}, {"track_genre": "afrobeat", "feature": "Danceability", "value": 66.96619433198381}, {"track_genre": "ambient", "feature": "Danceability", "value": 36.80649298597194}, {"track_genre": "bluegrass", "feature": "Danceability", "value": 53.556012332990754}, {"track_genre": "chicago-house", "feature": "Danceability", "value": 76.82784810126581}, {"track_genre": "children", "feature": "Danceability", "value": 71.52248704663212}, {"track_genre": "club", "feature": "Danceability", "value": 60.35288501026693}, {"track_genre": "comedy", "feature": "Danceability", "value": 57.78030456852792}, {"track_genre": "acoustic", "feature": "Valence", "value": 42.17664974619289}, {"track_genre": "afrobeat", "feature": "Valence", "value": 69.96601214574898}, {"track_genre": "ambient", "feature": "Valence", "value": 16.719058116232468}, {"track_genre": "bluegrass", "feature": "Valence", "value": 63.8549537512847}, {"track_genre": "chicago-house", "feature": "Valence", "value": 59.32586497890296}, {"track_genre": "children", "feature": "Valence", "value": 69.40584455958549}, {"track_genre": "club", "feature": "Valence", "value": 37.26535934291581}, {"track_genre": "comedy", "feature": "Valence", "value": 45.38928934010153}, {"track_genre": "acoustic", "feature": "Acousticness", "value": 56.69405059187817}, {"track_genre": "afrobeat", "feature": "Acousticness", "value": 26.901371690283398}, {"track_genre": "ambient", "feature": "Acousticness", "value": 77.6611162725451}, {"track_genre": "bluegrass", "feature": "Acousticness", "value": 55.62087112024665}, {"track_genre": "chicago-house", "feature": "Acousticness", "value": 3.445935407172996}, {"track_genre": "children", "feature": "Acousticness", "value": 49.62558014507773}, {"track_genre": "club", "feature": "Acousticness", "value": 16.00695556365503}, {"track_genre": "comedy", "feature": "Acousticness", "value": 72.66773421319797}, {"track_genre": "acoustic", "feature": "Speechiness", "value": 4.31697461928934}, {"track_genre": "afrobeat", "feature": "Speechiness", "value": 8.588866396761134}, {"track_genre": "ambient", "feature": "Speechiness", "value": 4.154328657314629}, {"track_genre": "bluegrass", "feature": "Speechiness", "value": 3.850462487153135}, {"track_genre": "chicago-house", "feature": "Speechiness", "value": 7.476181434599156}, {"track_genre": "children", "feature": "Speechiness", "value": 9.276870466321244}, {"track_genre": "club", "feature": "Speechiness", "value": 9.513305954825462}, {"track_genre": "comedy", "feature": "Speechiness", "value": 76.05070050761421}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
