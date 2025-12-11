@@ -67,7 +67,7 @@ d3.csv("15000_tracks_cleaned.csv").then(function(data) {
       "#FFCA8E",
       "#40EDC8",
       "#F77B87",
-      "#F7941D",
+      "#9E49ED",
       "#662D91",
       "#FF9DF4",
       "#FDFF94",
