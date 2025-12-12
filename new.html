@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Echoes Through Time</title>
+</head>
+<body>
+
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Echoes Through Time - A Spotify Story</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #191414;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
+
+.hero {
+  height: 100vh;
+  background: linear-gradient(180deg, #1DB954 0%, #191414 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(29, 185, 84, 0.2), transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+}
+
+.hero h1 {
+  font-size: 96px;
+  font-weight: 900;
+  margin-bottom: 20px;
+  letter-spacing: -2px;
+  animation: fadeInUp 1s ease;
+}
+
+.hero .tagline {
+  font-size: 28px;
+  color: #b3b3b3;
+  font-weight: 300;
+  margin-bottom: 50px;
+  animation: fadeInUp 1.2s ease;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  animation: bounce 2s infinite;
+  cursor: pointer;
+}
+
+.scroll-indicator span {
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #1DB954;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px 60px;
+  background: rgba(25, 20, 20, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.nav.visible {
+  opacity: 1;
+}
+
+.nav-logo {
+  font-size: 24px;
+  font-weight: 900;
+  color: #1DB954;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  color: #b3b3b3;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #1DB954;
+}
+
+.page-section {
+  min-height: 100vh;
+  padding: 120px 60px 80px;
+  position: relative;
+}
+
+.intro-section {
+  background: #191414;
+}
+
+.dataset-section {
+  background: linear-gradient(180deg, #191414 0%, #0f0d0d 100%);
+}
+
+.viz-section {
+  background: #191414;
+}
+
+.conclusion-section {
+  background: #191414;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.section-number {
+  font-size: 16px;
+  color: #1DB954;
+  letter-spacing: 3px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 64px;
+  font-weight: 900;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.section-subtitle {
+  font-size: 20px;
+  color: #b3b3b3;
+  font-weight: 300;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.content-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 50px;
+  margin-bottom: 40px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.content-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(29, 185, 84, 0.2);
+}
+
+.content-card h3 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #1DB954;
+  font-weight: 700;
+}
+
+.content-card p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #b3b3b3;
+  margin-bottom: 15px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin: 60px 0;
+}
+
+.feature-item {
+  background: rgba(29, 185, 84, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  border-left: 4px solid #1DB954;
+  transition: all 0.3s;
+}
+
+.feature-item:hover {
+  background: rgba(29, 185, 84, 0.2);
+  transform: translateX(5px);
+}
+
+.feature-item h4 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #1DB954;
+  font-weight: 700;
+}
+
+.feature-item ul {
+  list-style: none;
+  color: #b3b3b3;
+}
+
+.feature-item li {
+  padding: 8px 0;
+  padding-left: 20px;
+  position: relative;
+  font-size: 15px;
+}
+
+.feature-item li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #1DB954;
+}
+
+.expandable-item {
+  padding-left: 0 !important;
+}
+
+.expandable-item::before {
+  display: none;
+}
+
+.feature-main {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  padding-left: 20px;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.feature-main::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #1DB954;
+  transition: transform 0.3s;
+}
+
+.feature-main:hover {
+  color: #1DB954;
+}
+
+.dropdown-icon {
+  font-size: 12px;
+  margin-left: 8px;
+  transition: transform 0.3s;
+  color: #1DB954;
+}
+
+.feature-main.active .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+.feature-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  font-size: 14px;
+  color: #888;
+  line-height: 1.6;
+  padding-left: 20px;
+}
+
+.feature-detail.show {
+  max-height: 200px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.viz-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 80px;
+  border: 1px solid rgba(29, 185, 84, 0.2);
+}
+
+.viz-header {
+  margin-bottom: 30px;
+}
+
+.viz-number {
+  font-size: 14px;
+  color: #1DB954;
+  letter-spacing: 2px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.viz-title {
+  font-size: 42px;
+  font-weight: 900;
+  margin-bottom: 15px;
+}
+
+.viz-container {
+  background: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 30px 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.viz-container iframe {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+}
+
+.insight-box {
+  background: linear-gradient(135deg, rgba(29, 185, 84, 0.15), rgba(29, 185, 84, 0.05));
+  padding: 40px;
+  border-radius: 15px;
+  border-left: 5px solid #1DB954;
+  margin-top: 30px;
+}
+
+.insight-box h4 {
+  font-size: 24px;
+  color: #1DB954;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.insight-box p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #e0e0e0;
+}
+
+.story-transition {
+  text-align: center;
+  padding: 80px 40px;
+  position: relative;
+}
+
+.story-transition::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, #1DB954);
+}
+
+.story-transition p {
+  font-size: 24px;
+  line-height: 1.8;
+  color: #b3b3b3;
+  font-style: italic;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.story-transition strong {
+  color: #1DB954;
+  font-weight: 700;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin: 60px 0;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 30px;
+  background: rgba(29, 185, 84, 0.1);
+  border-radius: 15px;
+}
+
+.stat-number {
+  font-size: 56px;
+  font-weight: 900;
+  color: #1DB954;
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  font-size: 16px;
+  color: #b3b3b3;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.references {
+  padding: 50px;
+  border-radius: 20px;
+  margin-top: 60px;
+}
+
+.references h3 {
+  font-size: 32px;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+.references a {
+  text-decoration: none;
+  font-size: 15px;
+  transition: opacity 0.3s;
+  word-break: break-all;
+}
+
+.references a:hover {
+  opacity: 0.7;
+}
+
+.references p {
+  margin-bottom: 20px;
+  line-height: 1.8;
+}
+
+.footer {
+  text-align: center;
+  padding: 60px;
+}
+
+.footer p {
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 48px;
+  }
+
+  .hero .tagline {
+    font-size: 18px;
+  }
+
+  .section-title {
+    font-size: 42px;
+  }
+
+  .page-section {
+    padding: 80px 30px 60px;
+  }
+
+  .nav {
+    padding: 20px 30px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-logo">ECHOES THROUGH TIME</div>
+  <div class="nav-links">
+    <a href="#intro">Introduction</a>
+    <a href="#data">Data</a>
+    <a href="#visualizations">Visualization</a>
+    <a href="#conclusion">Conclusion</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>ECHOES THROUGH TIME</h1>
+    <p class="tagline">How Music Has Evolved Across Genres and Decades</p>
+  </div>
+  <div class="scroll-indicator" onclick="document.getElementById('intro').scrollIntoView({behavior: 'smooth'})">
+    <span>Scroll to Explore ↓</span>
+  </div>
+</section>
+
+<section class="page-section intro-section" id="intro">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">01 — INTRODUCTION</div>
+      <h2 class="section-title">The Question</h2>
+      <p class="section-subtitle">
+        How has music evolved across different genres and time periods, and what patterns emerge when we examine these changes holistically?
+      </p>
+    </div>
+
+    <div class="content-card">
+      <h3>The Universal Language</h3>
+      <p>
+        Music is one of humanity's most universal forms of expression, yet it is constantly evolving, shifting, merging, and reinventing itself across cultures and time periods. Studying this evolution offers insight into the broader cultural, technological, and social changes that shape human experience.
+      </p>
+      <p>
+        Our project examines how the music industry has changed over time by using Spotify Track Attributes and Popularity data to compare what made songs popular in different eras. This approach is compelling because listeners often don't think about why they like or dislike a song.
+      </p>
+    </div>
+
+    <div class="content-card">
+      <h3>The Power of Data</h3>
+      <p>
+        By analyzing attributes such as tempo, energy, danceability, and instrumentation, we can identify what contributes to a song's success. This allows us to model and predict not only what makes music popular today, but also what drove popularity in the past.
+      </p>
+      <p>
+        Musical change never happens in isolation. Genres emerge from specific historical moments and respond to new technologies and cultural movements. These forces shape the measurable features of popular music, revealing patterns in how styles develop, spread, and transform.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="page-section dataset-section" id="data">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">02 — THE DATA</div>
+      <h2 class="section-title">Our Foundation</h2>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number">15K</div>
+        <div class="stat-label">Tracks Analyzed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">20</div>
+        <div class="stat-label">Attributes</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">70+</div>
+        <div class="stat-label">Years</div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h3>Dataset Overview</h3>
+      <p>
+        Our analysis uses the <strong>Spotify Tracks Attributes and Popularity dataset</strong> from Kaggle, which originates directly from Spotify's API. This comprehensive dataset provides a robust foundation for examining music evolution across genres and time periods.
+      </p>
+      <p>
+        <strong>Data Source:</strong> The dataset was compiled using Spotify's Web API, which provides detailed audio analysis for every track in their catalog. Spotify's audio analysis is generated using sophisticated machine learning algorithms trained on millions of songs.
+      </p>
+      <p>
+        <strong>Time Span:</strong> Our 15,000-track sample spans from the 1950s through 2023, capturing over seven decades of musical evolution. This timeframe allows us to observe pre-digital era music (1950s-1980s), the digital revolution (1990s-2000s), and the streaming age (2010s-2020s).
+      </p>
+      <p>
+        <strong>Sample Size:</strong>
+          The complete dataset contains approximately 114,000 rows with 20 attribute columns. For our analysis, we used the first 15,000 rows (individual tracks), both to maintain computational efficiency and because we needed to manually retrieve the time-related metadata from the Spotify API ourselves. This subset still provides a substantial and representative sample for identifying statistically significant patterns and trends across musical eras and genres.
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <h4>Audio Features</h4>
+        <ul>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Danceability <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                How suitable the track is for dancing (0.0 to 1.0)
+            </div>
+          </li>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Energy <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                Intensity and activity level of the track (0.0 to 1.0)
+            </div>
+          </li>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Acousticness <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                Confidence measure of whether the track is acoustic (0.0 to 1.0)
+            </div>
+          </li>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Valence <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                Musical positivity conveyed (0.0 = sad, 1.0 = happy)
+            </div>
+          </li>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Speechiness <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                Presence of spoken words in the track (0.0 to 1.0)
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="feature-item">
+        <h4>Identity</h4>
+        <ul>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Track ID <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                Spotify's unique identifier for the track
+            </div>
+          </li>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Artists <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                Name of the performing artist(s)
+            </div>
+          </li>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Album Name <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                Title of the album the track belongs to
+            </div>
+          </li>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Track Name <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                Title of the track
+            </div>
+          </li>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Genre <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                Assigned genre label for the track
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="feature-item">
+        <h4>Metadata</h4>
+        <ul>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Popularity Score <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                Popularity score on Spotify (0–100 scale)
+            </div>
+          </li>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Release Date <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                Date the song was released
+            </div>
+          </li>
+          <li class="expandable-item">
+            <span class="feature-main" onclick="toggleFeature(this)">
+              Duration <span class="dropdown-icon">▼</span>
+            </span>
+            <div class="feature-detail">
+                Duration of the track in milliseconds
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+      <div class="content-card">
+      <h3>How We Measure Musical Evolution</h3>
+      <p>
+        <strong>Quantitative Metrics:</strong> Spotify's API provides numerical scores (0.0 to 1.0) for subjective qualities like "danceability" and "energy." These aren't human opinions. They're derived from analyzing waveforms, tempo, beat consistency, spectral analysis, and other acoustic properties.
+      </p>
+      <p>
+        <strong>Popularity Algorithm:</strong> Spotify's popularity score (0-100) is calculated based on total number of plays.
+      </p>
+      <p>
+        <strong>Evolution Tracking:</strong> By grouping songs by decade and genre, we track how average values of these metrics shift over time. A decline in average valence from the 1980s to 2020s, for example, indicates that collectively, popular music has become measurably less "positive-sounding" based on acoustic features.
+      </p>
+    </div>
+</section>
+
+<section class="page-section viz-section" id="visualizations">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">03 — VISUALIZATION</div>
+      <h2 class="section-title">Music Transformation</h2>
+      <p class="section-subtitle">
+      </p>
+    </div>
+
+    <div class="viz-card">
+      <div class="viz-header">
+        <h3 class="viz-title">How Success Changed</h3>
+      </div>
+      <div class="viz-container">
+          <iframe src="alt_hit_songs_evolution.html" width="100%" height="700"></iframe>
+      </div>
+      <div class="insight-box">
+        <p>
+            <strong>Key Takeaway</strong><br><br>
+            What does success sound like? The answer has changed dramatically. This vizualization reveals how the features of successful music
+            (songs with a 70.0+ popularity score) changed over four decades. The most striking trend is the dramatic decline of valence, dropping
+            from 82% in 1980 to just 51% by 2020, demonstrating music's shift away from happiness, with hit songs becoming noticeably darker.
+            Meanwhile, danceability showed an increase from 45% in 1990 to 69% in 2020, reflecting the growing influence of club culture and electronic
+            dance music. Energy levels remained relatively stable with minor fluctuations, suggesting that intensity has always been a component of
+            successful music regardless of era. These patterns indicate that modern hit songs are characterized by electronic production, darker content,
+            and danceable rhythms, a stark contrast to the high valence hits of the 1980s.
+        </p>
+      </div>
+    </div>
+
+    <div class="story-transition">
+      <p>
+        <strong>But why did this happen?</strong><br><br>
+        To understand the transformation, we need to meet the players in this evolution. Each genre carries its own unique sonic signature...
+      </p>
+    </div>
+
+    <div class="viz-card">
+      <div class="viz-header">
+        <h3 class="viz-title">Genre DNA</h3>
+      </div>
+      <div class="viz-container">
+          <iframe src="alt_genre_profiles.html" width="100%" height="700" ></iframe>
+      </div>
+      <div class="insight-box">
+        <p>
+            <strong>Key Takeaway</strong><br><br>
+            This comparative analysis reveals audio characteristics that make each music genre unique, and when we connect these genre
+            profiles to the temporal trends observed in Visualization 1, predictive patterns emerge. Genres heavily dependent on acoustic
+            sound, such as acoustic, bluegrass, and ambient music, face potential challenges in mainstream popularity, as our data shows
+            acoustic characteristics declining by 17% in hit songs from 1985 to 2020. The same goes for songs that rely heavily on a high
+            valence like childrens music, might face challenges becoming hit songs. Conversely, genres like chicago-house and club music,
+            which exhibit high danceability and electronic production, align closely with the characteristics that define modern successful music.
+            Genre success depends on alignment with evolving listener preferences. Genres with trending characteristics (electronic, danceable)
+            are positioned for broader success, while acoustic-focused genres may face reduced mainstream appeal despite maintaining dedicated audiences.
+        </p>
+      </div>
+    </div>
+
+    <div class="story-transition">
+      <p>
+        <strong>Understanding the players reveals only part of the picture.</strong><br><br>
+        The stakes themselves have changed. Success in music has become unpredictable in ways it never was before...
+      </p>
+    </div>
+
+    <div class="viz-card">
+      <div class="viz-header">
+        <h3 class="viz-title">The Recency Bias</h3>
+      </div>
+      <div class="viz-container">
+          <iframe src="decade_popularity.html" width="100%" height="700" ></iframe>
+      </div>
+      <div class="insight-box">
+        <p>
+            <strong>Key Takeaway</strong><br><br>
+            This analysis reveals the decades the top 30 tracks are from. Most of the songs are from the 2010s to 2020s. The 1950s,
+            1970s, 1980s, and 1990s aren’t even included in this. The 1960s are just scraping by with a single song, and even then,
+            it is on the lower end, with a popularity ranking of 82. This visualization also illustrates how many of the top 30 songs are
+            within each decade when the user clicks on a song. This reveals that the 2020s have many of the top 30 most popular songs. This
+            visualization reveals that songs are more popular in later decades. The most popular song is “Cuff It” by Beyoncé (2022) with a
+            popularity ranking of 92. The increase in popularity in music is likely due to the rise of social media and platforms such as SoundCloud,
+            Spotify, and TikTok, which make it easier to put music out there.
+        </p>
+      </div>
+    </div>
+
+    <div class="story-transition">
+      <p>
+        <strong>With new players and new rules, how has the entire ecosystem evolved?</strong><br><br>
+        Let's witness the expansion of musical possibility across seven decades...
+      </p>
+    </div>
+
+    <div class="viz-card">
+      <div class="viz-header">
+        <h3 class="viz-title">The Musical Universe</h3>
+      </div>
+      <div class="viz-container">
+        <iframe src="music_evolution_animated.html" width=100% height="800"></iframe>
+      </div>
+      <div class="insight-box">
+        <p><strong>Key Takeaway</strong><br><br>
+            Over time, popular music has transformed from a relatively narrow field into a richly diversified landscape spanning nearly every combination of energy
+            and danceability. While the 1960s featured only two genres, acoustic and afrobeats, clustered in the mid-range zones, the 2010s to 2020s show dense, wide ranging
+            distribution as new genres spawned. Energy levels have steadily risen, with club music favoring high energy sounds, and danceability
+            has similarly migrated upward, influenced by club and afrobeat production. Despite this expansion, core genre identities remain
+            consistent, ambient stays low energy, afrobeat and club dominate high energy and high danceability areas, and acoustic's music holds steady in moderate energy,
+            high danceability territory. Popular tracks increasingly cluster in the “sweet spot” of moderately high energy and high danceability, even as niche genres
+            continue to thrive outside mainstream zones. Overall, the musical ecosystem has become far more varied, democratized, and rhythm driven.
+  </p>
+      </div>
+    </div>
+
+    <div class="story-transition">
+      <p>
+        <strong>As the musical universe expanded, something else was changing...</strong><br><br>
+        The very length of songs tells a story about attention, commerce, and culture...
+      </p>
+    </div>
+
+    <div class="viz-card">
+      <div class="viz-header">
+        <h3 class="viz-title">Time & Attention</h3>
+      </div>
+      <div class="viz-container">
+          <iframe src="durationovertimeindex.html" width="100%" height="600" frameborder="0"></iframe>
+      </div>
+      <div class="insight-box">
+        <p><strong>Key Takeaway</strong><br><br>
+            This visualization is a D3 heatmap that shows the duration of music across different decades. It reveals that from the 1950s through the 1970s,
+            most songs were relatively short, generally staying below around 300–400 seconds. There are very few longer tracks during this period. Songs
+            from the 2010s to 2020s show much more variation in duration. While most modern songs still stay under 300 seconds, there are a few noticeable
+            outliers with longer songs.  In the 1950s, the majority of songs were below 200 seconds; however, in the 2020s, the music length is more spread,
+            with most music being between 150 seconds and 300 seconds. Also, over the decades, there is a change in the amount of genres. The 1950s had very
+            little variety in music but as the decades progressed there was a significant change in the amount of genres. This feature also demonstrates how
+            long different genres songs are, children songs are typically shorter, while chicago-house is typically longer. Overall, this suggests that earlier
+            decades tended to have consistently shorter songs, while later decades include a wider mix of both shorter and longer tracks. This also shows an influx
+            in music in the 2000s compared to the mid-1900s.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="page-section conclusion-section" id="conclusion">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">04 — CONCLUSION</div>
+      <h2 class="section-title">What We Learned</h2>
+      </p>
+    </div>
+
+    <div class="content-card">
+      <p>
+          Our visualizations reveal a few things about the data. Visualization 1 shows that while features such as speechiness, energy, and acousticness exhibit
+          less variability, there is a significant downward trend in the feature valence over the years, suggesting that music has become less positive in recent
+          years. In Visualization 2, across the decades from 1950 to the 2020s, ambient music has the highest level of acousticness but also the lowest danceability,
+          energy, and valence. In Visualization 3, songs from the 2010s to 2020s shows greater variability in popularity compared to songs from earlier decades. Songs
+          in the 2010s and 2020s are more popular than songs in earlier decades, likely due to the internet and the growth of social media throughout the years.
+      </p>
+
+        <p>
+            It is a consistent finding that songs in earlier decades are shorter in length, as shown in Visualization 5. After the 2000s, there is more spread in song length,
+            with a large portion falling between 150 and 300 seconds. This also demonstrates the increase in genres over the years and varying durations. Typically, children's
+            music is shorter while Chicago house music is longer in seconds. In Visualization 4, the increase in genres between 1950 and 2020 is shown. This provides a greater
+            spread in genres. It illustrates club music having more energy and danceability, while ambient music has less energy and danceability.
+        </p>
+
+        <p>
+            Overall, our data has changed over the decades. This is because of mood, popularity variability, and style. Some features have stayed the same throughout the decades.
+            Some future work could include comparing Spotify’s trends to other music platforms like Apple Music or Amazon Music. With this, we would be able to see whether these
+            trends stay consistent across platforms.
+        </p>
+    </div>
+
+
+    <div class="references">
+      <h3>References</h3>
+      <p>
+        1) <a href="https://royalsocietypublishing.org/doi/epdf/10.1098/rsos.171274" target="_blank">Royal Society Open Science - Music Evolution Study</a>
+      </p>
+      <p>
+        2) <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4453253/" target="_blank">NCBI PMC - Musical Preference Analysis</a>
+      </p>
+      <p>
+        3) Spotify Tracks Attributes and Popularity Dataset (Kaggle)
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+// Navbar visibility on scroll
+window.addEventListener('scroll', function() {
+  const nav = document.getElementById('mainNav');
+  if (window.scrollY > 100) {
+    nav.classList.add('visible');
+  } else {
+    nav.classList.remove('visible');
+  }
+});
+
+// Smooth scroll for navigation links
+document.querySelectorAll('.nav-links a').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Toggle feature dropdown
+function toggleFeature(element) {
+  const detail = element.nextElementSibling;
+  const isActive = element.classList.contains('active');
+
+  // Close all other open dropdowns
+  document.querySelectorAll('.feature-main.active').forEach(item => {
+    if (item !== element) {
+      item.classList.remove('active');
+      item.nextElementSibling.classList.remove('show');
+    }
+  });
+
+  // Toggle current dropdown
+  if (isActive) {
+    element.classList.remove('active');
+    detail.classList.remove('show');
+  } else {
+    element.classList.add('active');
+    detail.classList.add('show');
+  }
+}
+</script>
+
+</body>
+</html>
