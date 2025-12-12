@@ -23,8 +23,9 @@ decade = (
     alt.Chart(top30)
     .mark_bar()
     .encode(
-        x=alt.X('popularity:Q', title='Popularity (0–100)'),   
-        y=alt.Y('track_name:N', sort='-x', title='Track Name'),
+        x=alt.X('popularity:Q', title='Popularity (0–100)', axis=alt.Axis(labelFontSize=13, titleFontSize=18)
+),
+        y=alt.Y('track_name:N', sort='-x', title='Track Name', axis=alt.Axis(labelFontSize=13, titleFontSize=18)),
         color=alt.condition(
             select_bar,
             alt.Color('decade:O', scale=alt.Scale(range=legend_color)),

@@ -87,10 +87,9 @@ chart = (alt.Chart(feature_long).mark_bar().encode(
     title={
         "text": "Comparative Genre Analysis: Audio Profiles",
         "subtitle": "Click legend or a bar to highlight a feature across all genres",
-        "anchor": "start",
-        "offset": 20,
         "fontSize": 22,
-        "subtitleFontSize": 13, }
+        "subtitleFontSize": 13,
+    }
 ))
 
 chart.save('alt_genre_profiles.html')
